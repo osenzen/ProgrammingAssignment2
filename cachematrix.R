@@ -1,12 +1,36 @@
-#hello
+## Set matrix functions
 
 makeCacheMatrix <- function(x = matrix()) {
-
+  m <- NULL
+  set <- function(y) {
+    x <<- y
+    m <<- NULL
+  }
+  get <- function() x
+  setmtrx <- function(solve) m <<- solve
+  getmtrx <- function() m
+  list(set = set, get = get,
+       setmtrx = setmtrx,
+       getmtrx = getmtrx)
 }
 
+## Return the inverse matrix of 'x' if in cache - get from it!
 
-## Write a short comment describing this function
-
-cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+cacheSolve <- function(x=matrix(), ...) {
+  m <- x$getmtrx()
+  if(!is.null(m)) {
+    message("getting cached data")
+    return(m) ## return from cache
+  }
+  ## if no cache - calculate matrix solve
+  matrix <- x$get()a
+  m <- solve(matrix, ...)
+  x$setmtrx(m)
+  m	
 }
+
+## testing:
+## a <- makeCacheMatrix()
+## a$set( set a square matrix with U[n,n]!=0 ) 
+## cacheSolve(a) - at the first time you'll calc solve(a)
+## cacheSolve(a) - next time you'll get it from cache!
