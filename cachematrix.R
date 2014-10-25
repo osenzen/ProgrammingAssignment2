@@ -1,12 +1,13 @@
 ## Set matrix functions
-
 makeCacheMatrix <- function(x = matrix()) {
   m <- NULL
+  ## set new matrix 
   set <- function(y) {
     x <<- y
     m <<- NULL
   }
   get <- function() x
+  ## set solve matrix
   setmtrx <- function(solve) m <<- solve
   getmtrx <- function() m
   list(set = set, get = get,
@@ -14,15 +15,15 @@ makeCacheMatrix <- function(x = matrix()) {
        getmtrx = getmtrx)
 }
 
-## Return the inverse matrix of 'x' if in cache - get from it!
-
+## Return the inverse matrix of 'x' if in cache - take from it!
 cacheSolve <- function(x, ...) {
   m <- x$getmtrx()
+  ## check if matrix already calculated
   if(!is.null(m)) {
     message("getting cached data")
-    return(m) ## return from cache
+    return(m) ## return matrix 
   }
-  ## if no cache - calculate matrix solve
+  ## if no matrix in cache - calculate matrix solve
   matrix <- x$get()
   m <- solve(matrix, ...)
   x$setmtrx(m)
